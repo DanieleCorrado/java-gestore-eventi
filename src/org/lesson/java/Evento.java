@@ -2,6 +2,7 @@ package org.lesson.java;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.StringJoiner;
 
 public class Evento {
 
@@ -54,7 +55,7 @@ public class Evento {
 
     public void prenota(int posti) {
 
-        // Controlla che i posti da disdire siano positivi
+        // Controlla che i posti da prenotare siano positivi
 
         if (posti <= 0) {
             throw new IllegalArgumentException("Il numero di posti da prenotare deve essere positivo");
@@ -91,10 +92,16 @@ public class Evento {
         return this.postiTotali - this.postiPrenotati;
     }
 
+    public String getDataFormattata() {
+        return this.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
     @Override
     public String toString() {
-
-        return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " - " + titolo;
+        return new StringJoiner(" - ")
+                .add(getDataFormattata())
+                .add(this.getTitolo())
+                .toString();
     }
 
     // VALIDAZIONI
