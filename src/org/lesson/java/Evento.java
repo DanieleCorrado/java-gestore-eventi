@@ -16,6 +16,7 @@ public class Evento {
 
     public Evento(String titolo, LocalDate data, int postiTotali) {
 
+        verificaTitolo(titolo);
         verificaData(data);
         verificaPostiTotali(postiTotali);
 
@@ -53,6 +54,12 @@ public class Evento {
 
     public void prenota(int posti) {
 
+        // Controlla che i posti da disdire siano positivi
+
+        if (posti <= 0) {
+            throw new IllegalArgumentException("Il numero di posti da prenotare deve essere positivo");
+        }
+
         // Controlla che ci siano abbastanza posti disponibili
 
         if (postiPrenotati + posti > postiTotali) {
@@ -62,20 +69,51 @@ public class Evento {
         postiPrenotati += posti;
     }
 
+    public void disdici(int posti) {
+
+        // Controlla che i posti da disdire siano positivi
+
+        if (posti <= 0) {
+            throw new IllegalArgumentException("Il numero di posti da disdire deve essere positivo");
+        }
+
+        // Controlla che i posti da disdire siano stati prenotati
+
+        if (postiPrenotati < posti) {
+            throw new IllegalArgumentException("Il numero di posti da disdire è superiore ai posti prenotati");
+        }
+
+        postiPrenotati -= posti;
+    }
+
+    public int postDisponibili() {
+
+        return this.postiTotali - this.postiPrenotati;
+    }
+
     @Override
     public String toString() {
+
         return data.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " - " + titolo;
     }
 
     // VALIDAZIONI
 
-    public static void verificaData(LocalDate data) {
+    public static void verificaTitolo(String titolo) throws IllegalArgumentException{
+        if (titolo.isEmpty()) {
+            throw new IllegalArgumentException("Il titolo non può essere vuoto");
+        } else if (titolo.length() < 3) {
+            throw new IllegalArgumentException("Il titolo deve contenere almeno tre caratteri");
+        }
+    }
+
+    public static void verificaData(LocalDate data) throws IllegalArgumentException{
         if (data.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("La data dell'evento deve essere futura");
         }
     }
 
-    public static void verificaPostiTotali(int postiTotali) {
+    public static void verificaPostiTotali(int postiTotali) throws IllegalArgumentException{
         if (postiTotali <= 0) {
             throw new IllegalArgumentException("Il numero di posti totali deve essere positivo");
         }
