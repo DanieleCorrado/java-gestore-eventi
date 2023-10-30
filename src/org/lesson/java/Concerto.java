@@ -49,9 +49,12 @@ public class Concerto extends Evento{
 
     // VALIDAZIONI
 
-    public static void verificaOra(LocalTime ora) throws IllegalArgumentException{
-        if (ora.isBefore(LocalTime.now())) {
-            throw new IllegalArgumentException("L'ora dell'evento deve essere futura");
+    public void verificaOra(LocalTime ora) throws IllegalArgumentException{
+        if(this.getData().isEqual(LocalDate.now())){
+
+            if (ora.isBefore(LocalTime.now())) {
+                throw new IllegalArgumentException("L'ora dell'evento deve essere futura");
+            }
         }
     }
 

@@ -91,17 +91,20 @@ public class Main {
                     System.out.println("Nel programma sono presenti: " + programma.getNumEventi() + " eventi");
 
                     break;
+
                 case "6":
 
                     System.out.println("Eliminazione eventi");
                     programma.svuotaEventi();
 
                     break;
+
                 case "7":
 
                     continua = "N";
 
                     break;
+
                 default:
 
                     System.out.println("Input non valido");
@@ -117,8 +120,6 @@ public class Main {
             }
 
         }
-
-
 
         scanner.close();
 
@@ -200,7 +201,7 @@ public class Main {
 
     }
 
-    // Permette la prenotazione a un evento
+    // Permette la disdetta a un evento
 
     public static void disdici(Evento evento) {
 
